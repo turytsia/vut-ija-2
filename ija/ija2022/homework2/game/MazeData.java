@@ -1,20 +1,24 @@
 package ija.ija2022.homework2.game;
-import ija.ija2022.homework2.common.Field;
-import ija.ija2022.homework2.common.Maze;
+import ija.ija2022.homework2.tool.common.CommonField;
+import ija.ija2022.homework2.tool.common.CommonMaze;
+import ija.ija2022.homework2.tool.common.CommonMazeObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
-public class MazeData implements Maze {
+public class MazeData implements CommonMaze {
 
     private int rows;
     private int cols;
-    private ArrayList<ArrayList<Field>> mapList;
+    private ArrayList<ArrayList<CommonField>> mapList;
+    private ArrayList<CommonMazeObject> ghostList;
 
     public MazeData(int rows, int cols) {
         this.rows = rows + 2;
         this.cols = cols + 2;
-        this.mapList = new ArrayList<ArrayList<Field>>();
+        this.mapList = new ArrayList<ArrayList<CommonField>>();
+        this.ghostList = new ArrayList<CommonMazeObject>();
     }
 
     /**
@@ -30,11 +34,11 @@ public class MazeData implements Maze {
             return true;
 
         
-        ArrayList<Field> rowList = new ArrayList<Field>();
+        ArrayList<CommonField> rowList = new ArrayList<CommonField>();
 
         for (char symbol : line.toCharArray()) {
 
-            Field field = createField(symbol, this.mapList.size(), rowList.size());
+            CommonField field = this.createField(symbol, this.mapList.size(), rowList.size());
 
             if (field == null)
                 return true;
@@ -56,14 +60,19 @@ public class MazeData implements Maze {
      * @param col
      * @return Nový Field
      */
-    private Field createField(char symbol, int row, int col) {
-        Field field = new PathField(row, col);
+    private CommonField createField(char symbol, int row, int col) {
+        CommonField field = new PathField(row, col);
 
         switch (symbol) {
             case 'X':
                 return new WallField(row, col);
             case '.':
                 return new PathField(row, col);
+            case 'G':
+                CommonMazeObject ghost = new GhostObject(field);
+                this.ghostList.add(ghost);
+                field.put(ghost);
+                return field;
             case 'S':
                 field.put(new PacmanObject(field));
                 return field;
@@ -73,7 +82,7 @@ public class MazeData implements Maze {
     }
 
     @Override
-    public Field getField(int row, int col) {
+    public CommonField getField(int row, int col) {
         try{
             return this.mapList.get(row).get(col);
         } catch (IndexOutOfBoundsException e) {
@@ -89,6 +98,11 @@ public class MazeData implements Maze {
     @Override
     public int numCols() {
         return this.cols;
+    }
+
+    @Override
+    public List<CommonMazeObject> ghosts() {
+        return new ArrayList<>(this.ghostList);
     }
 
 }

@@ -1,13 +1,12 @@
 package ija.ija2022.homework2.game;
 
-import ija.ija2022.homework2.common.Field;
-import ija.ija2022.homework2.common.Maze;
-import ija.ija2022.homework2.common.MazeObject;
+import ija.ija2022.homework2.tool.common.CommonField;
+import ija.ija2022.homework2.tool.common.CommonMaze;
+import ija.ija2022.homework2.tool.common.CommonMazeObject;
 
-public class PathField extends FieldObject implements Field {
-    private Maze maze;
-    private MazeObject object;
-
+public class PathField extends FieldObject implements CommonField {
+    private CommonMaze maze;
+    private CommonMazeObject object;
 
     public PathField(int row, int col) {
         super(row, col);
@@ -27,7 +26,7 @@ public class PathField extends FieldObject implements Field {
     }
 
     @Override
-    public MazeObject get() {
+    public CommonMazeObject get() {
         return this.object;
     }
 
@@ -37,8 +36,8 @@ public class PathField extends FieldObject implements Field {
     }
 
     @Override
-    public Field nextField(Field.Direction dirs) {
-        Field field = null;
+    public CommonField nextField(CommonField.Direction dirs) {
+        CommonField field = null;
         switch (dirs) {
             case R:
                 field = this.maze.getField(this.row, this.col + 1);
@@ -53,7 +52,7 @@ public class PathField extends FieldObject implements Field {
                 field = this.maze.getField(this.row - 1, this.col);
                 break;
         }
-        
+
         if (field == null)
             throw new UnsupportedOperationException("field is null");
 
@@ -61,15 +60,20 @@ public class PathField extends FieldObject implements Field {
     }
 
     @Override
-    public boolean put(MazeObject object) {
-        if (!this.isEmpty())
+    public boolean put(CommonMazeObject object) {
+        if (this.object instanceof PacmanObject) {
+            ((PacmanObject) this.object).damage();
+            return true;
+        }
+        if (!this.isEmpty()) {
             return false;
+        }
         this.object = object;
         return true;
     }
 
     @Override
-    public boolean remove(MazeObject object) {
+    public boolean remove(CommonMazeObject object) {
         if (this.object != object)
             return false;
         this.object = null;
@@ -77,8 +81,31 @@ public class PathField extends FieldObject implements Field {
     }
 
     @Override
-    public void setMaze(Maze maze) {
+    public void setMaze(CommonMaze maze) {
         this.maze = maze;
     }
-    
+
+    @Override
+    public void addObserver(Observer o) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addObserver'");
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'removeObserver'");
+    }
+
+    @Override
+    public void notifyObservers() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'notifyObservers'");
+    }
+
+    @Override
+    public boolean contains(CommonMazeObject obj) {
+        return obj == this.object;
+    }
+
 }

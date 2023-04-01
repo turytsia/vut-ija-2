@@ -1,11 +1,11 @@
 package ija.ija2022.homework2.game;
 
-import ija.ija2022.homework2.common.Field;
-import ija.ija2022.homework2.common.Maze;
-import ija.ija2022.homework2.common.MazeObject;
+import ija.ija2022.homework2.tool.common.CommonField;
+import ija.ija2022.homework2.tool.common.CommonMaze;
+import ija.ija2022.homework2.tool.common.CommonMazeObject;
 
-public class WallField extends FieldObject implements Field {
-    private Maze maze;
+public class WallField extends FieldObject implements CommonField {
+    private CommonMaze maze;
 
     public WallField(int row, int col) {
         super(row, col);
@@ -26,7 +26,7 @@ public class WallField extends FieldObject implements Field {
     }
 
     @Override
-    public MazeObject get() {
+    public CommonMazeObject get() {
         return null;
     }
 
@@ -36,22 +36,46 @@ public class WallField extends FieldObject implements Field {
     }
 
     @Override
-    public Field nextField(Field.Direction dirs) {
+    public CommonField nextField(CommonField.Direction dirs) {
         throw new UnsupportedOperationException("Unimplemented method 'nextField'");
     }
 
     @Override
-    public boolean put(MazeObject object) {
+    public boolean put(CommonMazeObject object) {
         throw new UnsupportedOperationException("Unimplemented method 'put'");
     }
 
     @Override
-    public boolean remove(MazeObject object) {
+    public boolean remove(CommonMazeObject object) {
         throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
 
     @Override
-    public void setMaze(Maze maze) {
+    public void setMaze(CommonMaze maze) {
         this.maze = maze;
+    }
+
+    @Override
+    public void addObserver(Observer o) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addObserver'");
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'removeObserver'");
+    }
+
+    @Override
+    public void notifyObservers() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'notifyObservers'");
+    }
+
+    @Override
+    public boolean contains(CommonMazeObject obj) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'contains'");
     }
 }

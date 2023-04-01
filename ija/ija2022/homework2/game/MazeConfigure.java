@@ -1,6 +1,6 @@
 package ija.ija2022.homework2.game;
 
-import ija.ija2022.homework2.common.Maze;
+import ija.ija2022.homework2.tool.common.CommonMaze;
 
 public class MazeConfigure {
 
@@ -15,7 +15,7 @@ public class MazeConfigure {
      * 
      * @return vytvořený Maze
      */
-    public Maze createMaze() {
+    public CommonMaze createMaze() {
         return this.maze;
     }
 
