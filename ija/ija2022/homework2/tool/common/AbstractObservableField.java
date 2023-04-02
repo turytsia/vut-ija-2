@@ -13,7 +13,7 @@ public abstract class AbstractObservableField implements CommonField {
 
     public AbstractObservableField() {
     }
-
+    
     public void addObserver(Observable.Observer o) {
         this.observers.add(o);
     }

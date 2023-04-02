@@ -32,7 +32,13 @@ public class MazeMovable implements CommonMazeObject {
         this.field.remove(this);
         this.setField(nextField);
 
-        return nextField.put(this);
+        boolean res = nextField.put(this);
+
+        if (res) {
+            this.field.notifyObservers();
+        }
+
+        return res;
     }
 
     @Override

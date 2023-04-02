@@ -151,6 +151,7 @@ public class Homework2Test {
             msg = new StringBuilder();
             // Overeni spravnych notifikaci
             res = tester.checkNotification(msg, obj, current, previous);
+            System.out.println(msg);
             Assert.assertTrue("Test notifikace: " + msg, res);
         } 
         // Pokud se nema presun podarit

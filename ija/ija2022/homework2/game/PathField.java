@@ -82,6 +82,7 @@ public class PathField extends FieldObject implements CommonField {
         if (this.object != object)
             return false;
         this.object = null;
+        this.notifyObservers();
         return true;
     }
 
