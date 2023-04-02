@@ -8,3 +8,5 @@
 /dataSources.local.xml
 /.idea
 /university-homework-ija-2.iml
+.vscode
+build
