@@ -3,10 +3,15 @@ package ija.ija2022.homework2.game;
 import ija.ija2022.homework2.tool.common.CommonField;
 import ija.ija2022.homework2.tool.common.CommonMaze;
 import ija.ija2022.homework2.tool.common.CommonMazeObject;
+import ija.ija2022.homework2.tool.common.Observable;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class PathField extends FieldObject implements CommonField {
     private CommonMaze maze;
     private CommonMazeObject object;
+    private final Set<Observer> observers = new HashSet();
 
     public PathField(int row, int col) {
         super(row, col);
@@ -88,19 +93,21 @@ public class PathField extends FieldObject implements CommonField {
     @Override
     public void addObserver(Observer o) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addObserver'");
+        this.observers.add(o);
     }
 
     @Override
     public void removeObserver(Observer o) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeObserver'");
+        this.observers.remove(o);
     }
 
     @Override
     public void notifyObservers() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'notifyObservers'");
+        this.observers.forEach((o) -> {
+            o.update(this);
+        });
     }
 
     @Override
