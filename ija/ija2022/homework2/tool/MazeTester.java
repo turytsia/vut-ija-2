@@ -1,18 +1,18 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package ija.ija2022.homework2.tool;
 
 import ija.ija2022.homework2.tool.common.CommonField;
 import ija.ija2022.homework2.tool.common.CommonMaze;
 import ija.ija2022.homework2.tool.common.CommonMazeObject;
 import ija.ija2022.homework2.tool.view.FieldView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/*
+ *Třída ověřující implementaci vzoru Observer nad bludištěm. Simuluje objekty presenteru (view),
+ * které jsou schopny přijímat notifikace. Ověřuje notifikace správných objektů (políček) a správný počet notifikací.
+ */
 public class MazeTester {
     private final CommonMaze maze;
     private final List<FieldView> fields;
@@ -23,8 +23,8 @@ public class MazeTester {
         int rows = maze.numRows();
         int cols = maze.numCols();
 
-        for(int i = 0; i < rows; ++i) {
-            for(int j = 0; j < cols; ++j) {
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
                 FieldView field = new FieldView(maze.getField(i, j));
                 this.fields.add(field);
             }
@@ -32,10 +32,25 @@ public class MazeTester {
 
     }
 
+    /*
+     * Ověří, že žádné políčko nebylo notifikováno.
+     */
     public boolean checkEmptyNotification() {
         return this.check().isEmpty();
     }
 
+    /*
+     * Ověří správný průběh notifikace při přesunu objektu mezi políčky - tato políčka generují notifikace o změnách.
+     * O změně musí notifikovat políčka current a previous.
+     * Ověřuje, zda notifikaci zaslala správná políčka ve správném počtu.
+     * Po ověření smaže záznamy o notifikacích (odpovídá stavu žádné políčko nebylo notifikováno).
+     *
+     * Parametry:
+     *   msg - Objekt, do kterého se uloží zpráva případné chybě.
+     *   obj - Objekt, který se přesouval.
+     *   current - Políčko, na kterém je objekt po změně (přesunu).
+     *   previous - Políčko, na kterém byl objekt před změnou (přesunem).
+     */
     public boolean checkNotification(StringBuilder msg, CommonMazeObject obj, CommonField current, CommonField previous) {
         boolean res = this.privCheckNotification(msg, obj, current, previous);
         this.fields.forEach((f) -> {
@@ -51,8 +66,8 @@ public class MazeTester {
             msg.append("Chyba - nespravny pocet notifikovanych policek!").append(" Ocekava se 2, je ").append(size);
             return false;
         } else {
-            FieldView fv1 = (FieldView)changed.get(0);
-            FieldView fv2 = (FieldView)changed.get(1);
+            FieldView fv1 = (FieldView) changed.get(0);
+            FieldView fv2 = (FieldView) changed.get(1);
             CommonField f1 = fv1.getField();
             CommonField f2 = fv2.getField();
             size = fv1.numberUpdates();
@@ -94,8 +109,9 @@ public class MazeTester {
         }
     }
 
+
     private List<FieldView> check() {
-        List<FieldView> changed = (List)this.fields.stream().filter((f) -> {
+        List<FieldView> changed = (List) this.fields.stream().filter((f) -> {
             return f.numberUpdates() > 0;
         }).collect(Collectors.toList());
         return changed;

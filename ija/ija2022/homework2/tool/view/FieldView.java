@@ -1,13 +1,9 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package ija.ija2022.homework2.tool.view;
 
 import ija.ija2022.homework2.tool.common.CommonField;
 import ija.ija2022.homework2.tool.common.CommonMazeObject;
 import ija.ija2022.homework2.tool.common.Observable;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -15,6 +11,10 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+/*
+ *Třída reprezentující grafickou podobu políčka. Implementuje Observable.
+ * Observer, může být notifikován o změně stavu políčka.
+ */
 public class FieldView extends JPanel implements Observable.Observer {
     private final CommonField model;
     private final List<ComponentView> objects;
@@ -51,19 +51,32 @@ public class FieldView extends JPanel implements Observable.Observer {
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 
+    /*
+     * Zpracovává notifikaci o změně v objektu Observable.
+     * @param: field - Objekt, v kterém došlo ke změně.
+     */
     public final void update(Observable field) {
         ++this.changedModel;
         this.privUpdate();
     }
 
+    /*
+     * Vrací počet notifikací objektu z Observable.
+     */
     public int numberUpdates() {
         return this.changedModel;
     }
 
+    /*
+     * Vynuluje informaci o počtu notifikací objektu z Observable.
+     */
     public void clearChanged() {
         this.changedModel = 0;
     }
 
+    /*
+     * Vrací objekt políčka, které je zobrazováno tímto pohledem.
+     */
     public CommonField getField() {
         return this.model;
     }
