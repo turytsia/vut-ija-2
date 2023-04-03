@@ -1,21 +1,28 @@
 package ija.ija2022.homework2.game;
 
 import ija.ija2022.homework2.tool.common.CommonField;
-import ija.ija2022.homework2.tool.common.CommonMaze;
 import ija.ija2022.homework2.tool.common.CommonMazeObject;
-import ija.ija2022.homework2.tool.common.Observable;
 
-import java.util.HashSet;
-import java.util.Set;
-
-public class WallField extends FieldObject implements CommonField {
-    private CommonMaze maze;
-    private final Set<Observer> observers = new HashSet();
+/**
+ * Třída reprezentující zeď v bludišti. Na polícko nelze vstoupit (vložit
+ * objekt). Metody pracující s objekty (put a remove) a okolními poli nextField
+ * nejsou implementovány, tj. generují výjimku UnsupportedOperationException
+ * (při správném použití by neměly být nikdy volány nad objekty této třídy).
+ */
+public class WallField extends FieldObject {
 
     public WallField(int row, int col) {
         super(row, col);
     }
 
+    /**
+     * Objekty jsou shodné, pokud reprezentují stejný typ polícka (zeď) na stejné
+     * pozici (row, col).
+     * 
+     * @param obj Srovnávaný objekt
+     * 
+     * @return Výsledek testu
+     */
     public boolean equals(Object obj) {
 
         if (!(obj instanceof WallField))
@@ -40,49 +47,20 @@ public class WallField extends FieldObject implements CommonField {
         return true;
     }
 
-    @Override
     public CommonField nextField(CommonField.Direction dirs) {
         throw new UnsupportedOperationException("Unimplemented method 'nextField'");
     }
 
-    @Override
     public boolean put(CommonMazeObject object) {
         throw new UnsupportedOperationException("Unimplemented method 'put'");
     }
-
-    @Override
+    
     public boolean remove(CommonMazeObject object) {
         throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
 
     @Override
-    public void setMaze(CommonMaze maze) {
-        this.maze = maze;
-    }
-
-    @Override
-    public void addObserver(Observer o) {
-        // TODO Auto-generated method stub
-        this.observers.add(o);
-    }
-
-    @Override
-    public void removeObserver(Observer o) {
-        // TODO Auto-generated method stub
-        this.observers.remove(o);
-    }
-
-    @Override
-    public void notifyObservers() {
-        // TODO Auto-generated method stub
-        this.observers.forEach((o) -> {
-            o.update(this);
-        });
-    }
-
-    @Override
     public boolean contains(CommonMazeObject obj) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'contains'");
+        return false;
     }
 }

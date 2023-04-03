@@ -43,7 +43,7 @@ public class MazeData implements CommonMaze {
             if (field == null)
                 return true;
 
-            field.setMaze(this);
+            ((FieldObject)field).setMaze(this);
             rowList.add(field);
         }
 
@@ -71,10 +71,10 @@ public class MazeData implements CommonMaze {
             case 'G':
                 CommonMazeObject ghost = new GhostObject(field);
                 this.ghostList.add(ghost);
-                field.put(ghost);
+                ((PathField)field).put(ghost);
                 return field;
             case 'S':
-                field.put(new PacmanObject(field));
+                ((PathField)field).put(new PacmanObject(field));
                 return field;
             default:
                 return null;

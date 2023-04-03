@@ -4,17 +4,19 @@ import ija.ija2022.homework2.tool.common.CommonField;
 import ija.ija2022.homework2.tool.common.CommonMazeObject;
 import ija.ija2022.homework2.tool.common.CommonField.Direction;
 
+/**
+ * Dodatečná třída pro sdílené chovaní objektů v bludišti
+ */
 public class MazeMovable implements CommonMazeObject {
 
-    protected CommonField field;
+    protected PathField field;
 
     public MazeMovable(CommonField field) {
         this.setField(field);
     }
 
-    @Override
     public void setField(CommonField field) {
-        this.field = field;
+        this.field = (PathField)field;
     }
 
     @Override
@@ -27,12 +29,12 @@ public class MazeMovable implements CommonMazeObject {
         if (!this.canMove(dir))
             return false;
 
-        CommonField nextField = this.field.nextField(dir);
+        FieldObject nextField = (FieldObject)this.field.nextField(dir);
 
         this.field.remove(this);
         this.setField(nextField);
 
-        boolean res = nextField.put(this);
+        boolean res = ((PathField)nextField).put(this);
 
         if (res) {
             this.field.notifyObservers();
